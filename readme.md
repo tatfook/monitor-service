@@ -4,10 +4,14 @@ monitor our own servers
 
 ## nagios
 
-server: https://hub.docker.com/r/quantumobject/docker-nagios/
-
-
 ```bash
+git clone https://github.com/tatfook/monitor-service
+cd monitor-service
+
+###################################
+server: https://hub.docker.com/r/quantumobject/docker-nagios/
+###################################
+
 # pull nagios server image
 docker pull quantumobject/docker-nagios
 
@@ -23,15 +27,16 @@ docker run --name=nagios -d \
 # check cfg file
 docker exec nagios /usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
 
+# check nrpe
+docker exec nagios /usr/local/nagios/libexec/check_nrpe -H 121.14.117.251 -c "check_users"
+
 # restart
 docker restart nagios
-```
 
+###################################
+# nrpe-client: https://hub.docker.com/r/totem/docker-nrpe/
+###################################
 
-nrpe-client: https://hub.docker.com/r/totem/docker-nrpe/
-
-
-```bash
 # pull image
 docker pull totem/docker-nrpe
 
